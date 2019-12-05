@@ -30,7 +30,7 @@ ggplot(stepsPerDay, aes(x=totalSteps)) +
         ggtitle("Total Number of Steps Taken per Day") + xlab("Steps Per Day") + ylab("Frequency") +
         # Add histogram
         geom_histogram(breaks = x_breaks, color="darkblue", fill="lightblue") +
-        coord_cartesian(ylim=c(0,30)) +
+        coord_cartesian(ylim=c(0,25)) +
         stat_bin(breaks = x_breaks, geom="text", aes(label=..count..), vjust=-1.5)
 
 ## Q3: Calculate and report the mean and median of the total number of steps taken per day
@@ -63,12 +63,12 @@ StepsTimeSeriesData %>%
 
 ##-------------------------------------------------------------------------------------------------------------
 ## Imputing Missing Values
-## Q1: Calculate and report the total number of missing values in the dataset, i.e. number of rows with NAs
+### Q1: Calculate and report the total number of missing values in the dataset, i.e. number of rows with NAs
 colSums(is.na(activityData)) # Total number of NAs in each column of the original dataset
 colSums(is.na(stepsPerDay)) # Total number of days that contain NA values
 
 
-## Q2: Devise a strategy for filling in all of the missing values in the
+### Q2: Devise a strategy for filling in all of the missing values in the
 ## Strategy for imputting NA values:
 ## All NA values are located in the "steps" column.
 ## Find the average number of steps on the previous and next day, on the same interval.
@@ -119,12 +119,46 @@ ggplot(newDailySteps, aes(x=totalSteps)) +
         ggtitle("New Total Number of Steps Taken per Day") + xlab("Steps Per Day") + ylab("Frequency") +
         # Add histogram
         geom_histogram(breaks = x_breaks, color="darkblue", fill="lightblue") +
-        coord_cartesian(ylim=c(0,30)) +
+        coord_cartesian(ylim=c(0,25)) +
         stat_bin(breaks = x_breaks, geom="text", aes(label=..count..), vjust=-1.5)
 
-par(mfrow=c(1,2))
-hist(stepsPerDay$totalSteps, breaks = x_breaks, ylim=c(0,25), xlab = "Steps per Day",
-     ylab= "Frequency", main = "Original Dataset")
 
-hist(newDailySteps$totalSteps, breaks = x_breaks, ylim=c(0,25), xlab = "Steps per Day",
+## Histograms
+par(mfrow=c(2,1))
+hist(stepsPerDay$totalSteps, col="blue", breaks = x_breaks, ylim=c(0,25), xlab = "Steps per Day",
+     ylab= "Frequency", main = "Original Dataset")
+abline(v=mean(stepsPerDay$totalSteps, na.rm = TRUE), col="red", lwd=2)
+legend("topright", pch="-", lwd=2, col=c("red"), legend=c("Mean"), 
+       box.col="white", inset = .02)
+hist(newDailySteps$totalSteps, col="green", breaks = x_breaks, ylim=c(0,25), xlab = "Steps per Day",
      ylab= "Frequency", main = "with Imputed Data")
+abline(v=mean(newDailySteps$totalSteps, na.rm = TRUE), col="red", lwd=2)
+legend("topright", pch="-", lwd=2, col=c("red"), legend=c("Mean"), 
+       box.col="white", inset = .02)
+
+
+## Report mean and medians
+t1 <- stepsPerDay %>% summarise(mean=mean(totalSteps, na.rm = TRUE), median=median(totalSteps, na.rm = TRUE))
+t2 <- newDailySteps %>% summarise(mean=mean(totalSteps, na.rm = TRUE), median=median(totalSteps, na.rm = TRUE))
+knitr::kable(list(t1,t2),format = "markdown", digits = 2, row.names = F, align = 'c', col.names = c("Mean", "Median"))
+
+
+##-------------------------------------------------------------------------------------------------------------
+## Differences in activity patterns
+### Q1: Create new factor variable with two levels (weekday, weekend)
+data2 <- cbind(data2, dayWk=factor(ifelse(weekdays(as.Date(data2$date)) %in% c("Saturday", "Sunday"), "weekend", "weekday")))
+
+wkDayStepTimeSeries <- data2 %>% filter(dayWk=="weekday") %>% group_by(interval) %>% summarise(total=sum(steps), average=mean(steps))
+wkEndStepTimeSeries <- data2 %>% filter(dayWk=="weekend") %>% group_by(interval) %>% summarise(total=sum(steps), average=mean(steps))
+
+par(mfrow=c(2,1))
+plot(wkDayStepTimeSeries$average, type="l", col="blue", xlab="Interval", ylab = "Steps", main = "Weekday")
+plot(wkEndStepTimeSeries$average, type="l", col="blue", xlab="Interval", ylab = "Steps", main = "Weekend")
+
+ggplot(wkDayStepTimeSeries, aes(x=interval, y=average)) + geom_line() +
+        ggtitle("Average Number of Steps Taken in 5-Minute Intervals") +
+        xlab("Interval") + ylab("Steps Taken in Average")
+
+
+
+copyData2 <- data2
