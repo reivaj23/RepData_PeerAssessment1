@@ -1,8 +1,10 @@
 ---
 title: "PA1_template"
 author: "J. Gomez"
-date: "12/5/2019"
-output: html_document
+date: "12/9/2019"
+output: 
+  html_document: 
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
