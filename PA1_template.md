@@ -9,7 +9,7 @@ output:
 
 
 
-## Loading and preprocessing the data
+## Loading and preprocessing data
 
 ```r
 ## Load libraries
@@ -42,7 +42,7 @@ Make a histogram of the total number of steps taken each day
 x_breaks <- seq(0, 25000, 2500)
 ggplot(stepsPerDay, aes(x=totalSteps)) +
         # Add title and labels
-        ggtitle("Total Number of Steps Taken per Day") + xlab("Steps Per Day") + ylab("Frequency") +
+        ggtitle("Total Number of Steps taken per Day") + xlab("Steps Per Day") + ylab("Frequency") +
         # Add histogram
         geom_histogram(breaks = x_breaks, color="darkblue", fill="lightblue") +
         coord_cartesian(ylim=c(0,25)) +
@@ -85,7 +85,7 @@ StepsTimeSeriesData <- activityData %>%
         summarise(total=sum(steps, na.rm=TRUE), average=mean(steps, na.rm = TRUE))
 
 ggplot(StepsTimeSeriesData, aes(x=interval, y=average)) + geom_line() +
-        ggtitle("Average Number of Steps Taken in 5-Minute Intervals") +
+        ggtitle("Average Number of Steps taken in 5-Minute Intervals") +
         xlab("Interval") + ylab("Steps Taken in Average")
 ```
 
@@ -216,7 +216,7 @@ newDailySteps <- data2 %>% group_by(date) %>% summarise(totalSteps=sum(steps))
 x_breaks <- seq(0, 25000, 2500)
 ggplot(newDailySteps, aes(x=totalSteps)) +
         # Add title and labels
-        ggtitle("New Total Number of Steps Taken per Day") + xlab("Steps Per Day") + ylab("Frequency") +
+        ggtitle("New Total Number of Steps taken per Day") + xlab("Steps Per Day") + ylab("Frequency") +
         # Add histogram
         geom_histogram(breaks = x_breaks, color="darkblue", fill="lightblue") +
         coord_cartesian(ylim=c(0,25)) +
@@ -227,12 +227,12 @@ ggplot(newDailySteps, aes(x=totalSteps)) +
 
 ```r
 par(mfrow=c(1,2))
-hist(stepsPerDay$totalSteps, col="blue", breaks = x_breaks, ylim=c(0,25), xlab = "Steps per Day",
+hist(stepsPerDay$totalSteps, col="blue", breaks = x_breaks, ylim=c(0,25), xlab = "Steps per day",
      ylab= "Frequency", main = "Original Dataset")
 abline(v=mean(stepsPerDay$totalSteps, na.rm = TRUE), col="red", lwd=2)
 legend("topright", pch="-", lwd=2, col=c("red"), legend=c("Mean"), 
        box.col="white", inset = .02)
-hist(newDailySteps$totalSteps, col="green", breaks = x_breaks, ylim=c(0,25), xlab = "Steps per Day",
+hist(newDailySteps$totalSteps, col="green", breaks = x_breaks, ylim=c(0,25), xlab = "Steps per day",
      ylab= "Frequency", main = "with Imputed Data")
 abline(v=mean(newDailySteps$totalSteps, na.rm = TRUE), col="red", lwd=2)
 legend("topright", pch="-", lwd=2, col=c("red"), legend=c("Mean"), 
@@ -270,8 +270,8 @@ wkDayStepTimeSeries <- data2 %>% filter(dayWk=="weekday") %>% group_by(interval)
 wkEndStepTimeSeries <- data2 %>% filter(dayWk=="weekend") %>% group_by(interval) %>% summarise(total=sum(steps), average=mean(steps))
 
 par(mfrow=c(2,1))
-plot(wkDayStepTimeSeries$average, type="l", col="blue", xlab="Interval", ylab = "Steps", main = "Weekday")
-plot(wkEndStepTimeSeries$average, type="l", col="blue", xlab="Interval", ylab = "Steps", main = "Weekend")
+plot(wkDayStepTimeSeries$average, type="l", col="blue", xlab="Interval", ylab = "steps", main = "Weekday")
+plot(wkEndStepTimeSeries$average, type="l", col="blue", xlab="Interval", ylab = "steps", main = "Weekend")
 ```
 
 <img src="Figs/weekdays-1.png" style="display: block; margin: auto;" />
