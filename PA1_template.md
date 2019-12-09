@@ -49,7 +49,7 @@ ggplot(stepsPerDay, aes(x=totalSteps)) +
         stat_bin(breaks = x_breaks, geom="text", aes(label=..count..), vjust=-1.5)
 ```
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+<img src="Figs/hist1-1.png" style="display: block; margin: auto;" />
 
 
 Calculate and report the mean and median of the total number of steps taken per day
@@ -89,7 +89,7 @@ ggplot(StepsTimeSeriesData, aes(x=interval, y=average)) + geom_line() +
         xlab("Interval") + ylab("Steps Taken in Average")
 ```
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+<img src="Figs/avgPattern-1.png" style="display: block; margin: auto;" />
 
 
 Which 5-minute interval, on average, contains the maximum number of steps?
@@ -223,7 +223,7 @@ ggplot(newDailySteps, aes(x=totalSteps)) +
         stat_bin(breaks = x_breaks, geom="text", aes(label=..count..), vjust=-1.5)
 ```
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+<img src="Figs/hist2-1.png" style="display: block; margin: auto;" />
 
 ```r
 par(mfrow=c(1,2))
@@ -239,7 +239,7 @@ legend("topright", pch="-", lwd=2, col=c("red"), legend=c("Mean"),
        box.col="white", inset = .02)
 ```
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-13-2.png" style="display: block; margin: auto;" />
+<img src="Figs/hist2-2.png" style="display: block; margin: auto;" />
 
 Report mean and medians
 
@@ -274,4 +274,4 @@ plot(wkDayStepTimeSeries$average, type="l", col="blue", xlab="Interval", ylab = 
 plot(wkEndStepTimeSeries$average, type="l", col="blue", xlab="Interval", ylab = "Steps", main = "Weekend")
 ```
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
+<img src="Figs/weekdays-1.png" style="display: block; margin: auto;" />

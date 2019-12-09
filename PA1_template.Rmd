@@ -37,7 +37,7 @@ stepsPerDay <- activityData %>%
 ```
 
 Make a histogram of the total number of steps taken each day
-```{r, warning=FALSE, fig.align='center'}
+```{r hist1, warning=FALSE, fig.align='center', fig.path='Figs/'}
 x_breaks <- seq(0, 25000, 2500)
 ggplot(stepsPerDay, aes(x=totalSteps)) +
         # Add title and labels
@@ -50,7 +50,7 @@ ggplot(stepsPerDay, aes(x=totalSteps)) +
 
 
 Calculate and report the mean and median of the total number of steps taken per day
-```{r, fig.align='center'}
+```{r stepsStats, fig.align='center'}
 stepsPerDay %>% summarise(mean=mean(totalSteps, na.rm = TRUE), median=median(totalSteps, na.rm = TRUE)) %>%
         knitr::kable(format = "html", digits = 2, row.names = F, align = 'c',
                      col.names = c("Mean", "Median"))
@@ -59,7 +59,7 @@ stepsPerDay %>% summarise(mean=mean(totalSteps, na.rm = TRUE), median=median(tot
 
 ## What is the average daily activity pattern?
 Make a time series plot of the 5-minute interval and average number of step taken, averaged across all days
-```{r, fig.align='center'}
+```{r avgPattern, fig.align='center', fig.path='Figs/'}
 StepsTimeSeriesData <- activityData %>% 
         group_by(interval) %>% 
         summarise(total=sum(steps, na.rm=TRUE), average=mean(steps, na.rm = TRUE))
@@ -71,7 +71,7 @@ ggplot(StepsTimeSeriesData, aes(x=interval, y=average)) + geom_line() +
 
 
 Which 5-minute interval, on average, contains the maximum number of steps?
-```{r, fig.align='center'}
+```{r stepTimeSeries, fig.align='center'}
 StepsTimeSeriesData %>% 
         filter(average==max(average)) %>%
         knitr::kable(format = "html", digits = 2, row.names = F, align = 'c', 
@@ -80,7 +80,7 @@ StepsTimeSeriesData %>%
 
 ## Imputing missing values
 Calculate and report the total number of missing values in the dataset, i.e. number of rows with NAs
-```{r}
+```{r missingData}
 colSums(is.na(activityData)) # Total number of NAs in each column of the original dataset
 colSums(is.na(stepsPerDay)) # Total number of days that contain NA values
 ```
@@ -88,24 +88,24 @@ colSums(is.na(stepsPerDay)) # Total number of days that contain NA values
 Strategy for imputting NA values: All NA values are located in the "steps" column. Find the average number of steps on the previous and next day, on the same interval. Example: if one row with missing data is on 2012-10-15, interval 20, then average the values of 2012-10-14 and 2012-10-16, both from interval 20.
 
 Find days with missing data (NAs)
-```{r}
+```{r naDays}
 naDays <- activityData %>% group_by(date) %>% summarise(total=sum(steps)) %>% 
         filter(is.na(total)==TRUE) %>% select(date)
 naDays
 ```
 
 Create a copy dataset
-```{r}
+```{r copyData}
 data2 <- activityData
 ```
 
 Find rows with missing data (NAs)
-```{r}
+```{r naRows}
 naRows <- which(is.na(data2$steps))
 ```
 
 Create a new dataset equal to the original but with missing data filled in
-```{r,  eval=TRUE, cache=TRUE}
+```{r imputingData,  eval=TRUE, cache=TRUE}
 minDate <- min(as.Date(data2$date))
 maxDate <- max(as.Date(data2$date))
 count <- 0
@@ -132,7 +132,7 @@ colSums(is.na(data2))
 ```
 
 Make a histogram of the total number of steps taken each day and calculate and report the mean and median taken per day. 
-```{r, fig.align='center', warning=FALSE}
+```{r hist2, fig.align='center', warning=FALSE, fig.path='Figs/'}
 newDailySteps <- data2 %>% group_by(date) %>% summarise(totalSteps=sum(steps))
 x_breaks <- seq(0, 25000, 2500)
 ggplot(newDailySteps, aes(x=totalSteps)) +
@@ -157,7 +157,7 @@ legend("topright", pch="-", lwd=2, col=c("red"), legend=c("Mean"),
 ```
 
 Report mean and medians
-```{r}
+```{r newStats}
 t1 <- stepsPerDay %>% summarise(mean=mean(totalSteps, na.rm = TRUE), median=median(totalSteps, na.rm = TRUE))
 t2 <- newDailySteps %>% summarise(mean=mean(totalSteps, na.rm = TRUE), median=median(totalSteps, na.rm = TRUE))
 knitr::kable(list(t1,t2),format = "markdown", digits = 2, row.names = F, align = 'c', col.names = c("Mean", "Median"))
@@ -166,7 +166,7 @@ knitr::kable(list(t1,t2),format = "markdown", digits = 2, row.names = F, align =
 
 ## Are there differences in activity patterns between weekdays and weekends?
 Create new factor variable with two levels (weekday, weekend)
-```{r, fig.align='center'}
+```{r weekdays, fig.align='center', fig.path='Figs/'}
 data2 <- cbind(data2, dayWk=factor(ifelse(weekdays(as.Date(data2$date)) %in% c("Saturday", "Sunday"), "weekend", "weekday")))
 
 wkDayStepTimeSeries <- data2 %>% filter(dayWk=="weekday") %>% group_by(interval) %>% summarise(total=sum(steps), average=mean(steps))
