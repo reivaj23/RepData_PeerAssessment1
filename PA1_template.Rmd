@@ -103,7 +103,7 @@ naRows <- which(is.na(data2$steps))
 ```
 
 Create a new dataset equal to the original but with missing data filled in
-```{r,  eval=TRUE}
+```{r,  eval=TRUE, cache=TRUE}
 minDate <- min(as.Date(data2$date))
 maxDate <- max(as.Date(data2$date))
 count <- 0
@@ -173,8 +173,4 @@ wkEndStepTimeSeries <- data2 %>% filter(dayWk=="weekend") %>% group_by(interval)
 par(mfrow=c(2,1))
 plot(wkDayStepTimeSeries$average, type="l", col="blue", xlab="Interval", ylab = "Steps", main = "Weekday")
 plot(wkEndStepTimeSeries$average, type="l", col="blue", xlab="Interval", ylab = "Steps", main = "Weekend")
-
-ggplot(wkDayStepTimeSeries, aes(x=interval, y=average)) + geom_line() +
-        ggtitle("Average Number of Steps Taken in 5-Minute Intervals") +
-        xlab("Interval") + ylab("Steps Taken in Average")
 ```
