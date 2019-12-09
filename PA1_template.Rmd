@@ -1,18 +1,18 @@
 ---
 title: "PA1_template"
 author: "J. Gomez"
-date: "12/9/2019"
+date: "12/09/2019"
 output: 
   html_document: 
     keep_md: yes
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, echo=TRUE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Loading and preprocessing the data
-```{r, message=FALSE}
+```{r libraries, message=FALSE}
 ## Load libraries
 library(dplyr)
 library(ggplot2)
