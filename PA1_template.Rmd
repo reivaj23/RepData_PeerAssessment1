@@ -1,25 +1,277 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+> 
+> 
+> ?knit
+> ?knit2html
+> getwd()
+[1] "C:/Users/Ivan/Documents/R/RProjects"
+> ls
+function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE, 
+    pattern, sorted = TRUE) 
+{
+    if (!missing(name)) {
+        pos <- tryCatch(name, error = function(e) e)
+        if (inherits(pos, "error")) {
+            name <- substitute(name)
+            if (!is.character(name)) 
+                name <- deparse(name)
+            warning(gettextf("%s converted to character string", 
+                sQuote(name)), domain = NA)
+            pos <- name
+        }
+    }
+    all.names <- .Internal(ls(envir, all.names, sorted))
+    if (!missing(pattern)) {
+        if ((ll <- length(grep("[", pattern, fixed = TRUE))) && 
+            ll != length(grep("]", pattern, fixed = TRUE))) {
+            if (pattern == "[") {
+                pattern <- "\\["
+                warning("replaced regular expression pattern '[' by  '\\\\['")
+            }
+            else if (length(grep("[^\\\\]\\[<-", pattern))) {
+                pattern <- sub("\\[<-", "\\\\\\[<-", 
+                  pattern)
+                warning("replaced '[<-' by '\\\\[<-' in regular expression pattern")
+            }
+        }
+        grep(pattern, all.names, value = TRUE)
+    }
+    else all.names
+}
+<bytecode: 0x000001a9a6c89598>
+<environment: namespace:base>
+> list()
+list()
+> dir()
+[1] "activity.csv"               "ActivityMonitotingData.zip" "CapitalBikeshare"           "copyPlotTest.png"          
+[5] "DataScienceProgram"         "Mexico"                     "NBA"                        "SimRacing"                 
+[9] "testfplot.pdf"             
+> knit2html("./DataScienceProgram/Ch05Wk02Project/PA1_Template.Rmd")
+Error in knit2html("./DataScienceProgram/Ch05Wk02Project/PA1_Template.Rmd") : 
+  could not find function "knit2html"
+> knitr::opts_chunk$set(echo = TRUE)
+> str(data2)
+'data.frame':	17568 obs. of  3 variables:
+ $ steps   : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ date    : Factor w/ 61 levels "2012-10-01","2012-10-02",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+> colSums(is.na(data2))
+   steps     date interval 
+       0        0        0 
+> rmarkdown::render("./DataScienceProgram/Ch05Wk02Project/PA1_Template.Rmd")
 
 
-## Loading and preprocessing the data
+processing file: PA1_Template.Rmd
+  |..                                                               |   3%
+  ordinary text without R code
+
+  |....                                                             |   6%
+label: setup (with options) 
+List of 1
+ $ include: logi FALSE
+
+  |......                                                           |   9%
+  ordinary text without R code
+
+  |........                                                         |  12%
+label: unnamed-chunk-3 (with options) 
+List of 1
+ $ message: logi FALSE
 
 
+Attaching package: 'dplyr'
 
-## What is mean total number of steps taken per day?
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+
+trying URL 'https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip'
+Content type 'application/zip' length 53559 bytes (52 KB)
+downloaded 52 KB
+
+  |..........                                                       |  15%
+  ordinary text without R code
+
+  |............                                                     |  18%
+label: unnamed-chunk-4
+  |..............                                                   |  21%
+  ordinary text without R code
+
+  |................                                                 |  24%
+label: unnamed-chunk-5 (with options) 
+List of 2
+ $ warning  : logi FALSE
+ $ fig.align: chr "center"
+
+  |..................                                               |  27%
+  ordinary text without R code
+
+  |....................                                             |  30%
+label: unnamed-chunk-6 (with options) 
+List of 1
+ $ fig.align: chr "center"
+
+  |......................                                           |  33%
+  ordinary text without R code
+
+  |........................                                         |  36%
+label: unnamed-chunk-7 (with options) 
+List of 1
+ $ fig.align: chr "center"
+
+  |..........................                                       |  39%
+  ordinary text without R code
+
+  |............................                                     |  42%
+label: unnamed-chunk-8 (with options) 
+List of 1
+ $ fig.align: chr "center"
+
+  |..............................                                   |  45%
+  ordinary text without R code
+
+  |................................                                 |  48%
+label: unnamed-chunk-9
+  |.................................                                |  52%
+  ordinary text without R code
+
+  |...................................                              |  55%
+label: unnamed-chunk-10
+  |.....................................                            |  58%
+  ordinary text without R code
+
+  |.......................................                          |  61%
+label: unnamed-chunk-11
+  |.........................................                        |  64%
+  ordinary text without R code
+
+  |...........................................                      |  67%
+label: unnamed-chunk-12
+  |.............................................                    |  70%
+  ordinary text without R code
+
+  |...............................................                  |  73%
+label: unnamed-chunk-13 (with options) 
+List of 1
+ $ eval: logi FALSE
+
+  |.................................................                |  76%
+  ordinary text without R code
+
+  |...................................................              |  79%
+label: unnamed-chunk-14
+  |.....................................................            |  82%
+  ordinary text without R code
+
+  |.......................................................          |  85%
+label: unnamed-chunk-15 (with options) 
+List of 2
+ $ fig.align: chr "center"
+ $ warning  : logi FALSE
+
+  |.........................................................        |  88%
+  ordinary text without R code
+
+  |...........................................................      |  91%
+label: unnamed-chunk-16
+  |.............................................................    |  94%
+  ordinary text without R code
+
+  |...............................................................  |  97%
+label: unnamed-chunk-17 (with options) 
+List of 1
+ $ fig.align: chr "center"
+
+  |.................................................................| 100%
+  ordinary text without R code
 
 
+output file: PA1_Template.knit.md
 
-## What is the average daily activity pattern?
+"C:/Program Files/RStudio/bin/pandoc/pandoc" +RTS -K512m -RTS PA1_Template.utf8.md --to html4 --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash+smart --output PA1_Template.html --email-obfuscation none --self-contained --standalone --section-divs --template "C:\Users\Ivan\Documents\R\win-library\3.6\rmarkdown\rmd\h\default.html" --no-highlight --variable highlightjs=1 --variable "theme:bootstrap" --include-in-header "C:\Users\Ivan\AppData\Local\Temp\Rtmp0IWJRW\rmarkdown-str32c82aef2200.html" --mathjax --variable "mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" 
+
+Output created: PA1_Template.html
+Warning messages:
+1: Removed 8 rows containing non-finite values (stat_bin). 
+2: Removed 8 rows containing non-finite values (stat_bin). 
+> t1 <- stepsPerDay %>% summarise(mean=mean(totalSteps, na.rm = TRUE), median=median(totalSteps, na.rm = TRUE))
+> t2 <- newDailySteps %>% summarise(mean=mean(totalSteps, na.rm = TRUE), median=median(totalSteps, na.rm = TRUE))
+> knitr::kable(list(t1,t2),format = "markdown", digits = 2, row.names = F, align = 'c', col.names = c("Mean", "Median"))
+> # t1 <- stepsPerDay %>% summarise(mean=mean(totalSteps, na.rm = TRUE), median=median(totalSteps, na.rm = TRUE))
+> # t2 <- newDailySteps %>% summarise(mean=mean(totalSteps, na.rm = TRUE), median=median(totalSteps, na.rm = TRUE))
+> #knitr::kable(list(t1,t2),format = "markdown", digits = 2, row.names = F, align = 'c', col.names = c("Mean", "Median"))
+> stepsPerDay %>% summarise(mean=mean(totalSteps, na.rm = TRUE), median=median(totalSteps, na.rm = TRUE))
+> newDailySteps %>% summarise(mean=mean(totalSteps, na.rm = TRUE), median=median(totalSteps, na.rm = TRUE))
+> 
+> 
+> 
+> 
+> newDailySteps %>% summarise(mean=mean(totalSteps, na.rm = TRUE), median=median(totalSteps, na.rm = TRUE)) %>% knitr::kable()
 
 
+|     mean| median|
+|--------:|------:|
+| 10295.52|  10571|
+> newDailySteps %>% summarise(mean=mean(totalSteps, na.rm = TRUE), median=median(totalSteps, na.rm = TRUE)) %>% knitr::kable()
+> 
+> 
+> 
+> colMeans(newDailySteps$totalSteps)
+Error in colMeans(newDailySteps$totalSteps) : 
+  'x' must be an array of at least two dimensions
+> newDailySteps
+# A tibble: 61 x 2
+   date       totalSteps
+   <fct>           <dbl>
+ 1 2012-10-01        126
+ 2 2012-10-02        126
+ 3 2012-10-03      11352
+ 4 2012-10-04      12116
+ 5 2012-10-05      13294
+ 6 2012-10-06      15420
+ 7 2012-10-07      11015
+ 8 2012-10-08      11913
+ 9 2012-10-09      12811
+10 2012-10-10       9900
+# ... with 51 more rows
+> colMeans(newDailySteps$totalSteps)
+Error in colMeans(newDailySteps$totalSteps) : 
+  'x' must be an array of at least two dimensions
+> str(newDailySteps)
+Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	61 obs. of  2 variables:
+ $ date      : Factor w/ 61 levels "2012-10-01","2012-10-02",..: 1 2 3 4 5 6 7 8 9 10 ...
+ $ totalSteps: num  126 126 11352 12116 13294 ...
+> colMeans(newDailySteps[,2])
+totalSteps 
+  10295.52 
+> 
+> newDailySteps %>% summarise(mean=mean(totalSteps, na.rm = TRUE), median=median(totalSteps, na.rm = TRUE)) %>% knitr::kable()
 
-## Imputing missing values
 
+|     mean| median|
+|--------:|------:|
+| 10295.52|  10571|
+> colMeans(newDailySteps[,2])
+totalSteps 
+  10295.52 
+> median(newDailySteps[,2])
+Error in median.default(newDailySteps[, 2]) : need numeric data
+> ?median
+> median(newDailySteps$totalSteps)
+[1] 10571
+> colMeans(newDailySteps[,2]), median(newDailySteps$totalSteps)
+Error: unexpected ',' in "colMeans(newDailySteps[,2]),"
+> colMeans(newDailySteps[,2]) | median(newDailySteps$totalSteps)
+totalSteps 
+      TRUE 
+> 
 
+
 
-## Are there differences in activity patterns between weekdays and weekends?
+
+Show in New WindowClear OutputExpand/Collapse Output
+   steps     date interval 
+       0        0        0 
